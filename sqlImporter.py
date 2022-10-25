@@ -2,9 +2,6 @@ import json
 import hashlib
 from sqlDBInit import create_connection
 
-tube_data_file = open('./train-network.json')
-
-tube_data = json.load(tube_data_file)
 
 def writeStationsTable(stations, conn):
 
@@ -73,18 +70,20 @@ def writeLinesTable(lines, conn):
         print("There was a mistake during the writing of the LineToStations records in the DB")
         print(e)
 
-def getIdFromName(name):
+def getIdFromName(name): # Generates an unique id from a name string
     m = hashlib.md5()
     m.update(name.encode('utf-8'))
     return m.hexdigest()
 
 if __name__ == '__main__':
-    conn = create_connection("train_network")
-    cursor = conn.cursor()
 
-    writeStationsTable(tube_data["stations"], conn)
-    writeLinesTable(tube_data["lines"], conn)
+    tube_data_file = open('./train-network.json')
+    tube_data = json.load(tube_data_file)              # load JSON dataset into list of dictionaries
+
+    conn = create_connection("train_network")          # connects to the SQLite DB
+
+    writeStationsTable(tube_data["stations"], conn)    # writes the station data to the DB
+
+    writeLinesTable(tube_data["lines"], conn)          # writes the lines data to the DB
 
     conn.close()
-
-#print(tube_data)
