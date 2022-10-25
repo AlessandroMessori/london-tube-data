@@ -82,7 +82,7 @@ if __name__ == '__main__':
     conn = create_connection("train_network")
     cursor = conn.cursor()
 
-    #writeStationsTable(tube_data["stations"], conn)
+    writeStationsTable(tube_data["stations"], conn)
     writeLinesTable(tube_data["lines"], conn)
 
     conn.close()
