@@ -12,7 +12,7 @@ def create_connection(db_file):
         print(e)
     finally:
         if conn:
-            conn.close()
+            return conn
 
 
 if __name__ == '__main__':
